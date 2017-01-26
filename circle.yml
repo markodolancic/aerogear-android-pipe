@@ -1,0 +1,37 @@
+machine:
+  java:
+    version: oraclejdk8
+  environment:
+    QEMU_AUDIO_DRV: none
+    ANDROID_SDK: android-24
+    ANDROID_EMULATOR: circleci-android24
+
+dependencies:
+  override:
+
+    # ---------------------------------------------------- #
+    # ---------- Instaling dependencies locally ---------- #
+    # ---------------------------------------------------- #
+
+    # Checkout maven-android-sdk-deployer
+    - git clone git://github.com/mosabua/maven-android-sdk-deployer.git $HOME/maven-android-sdk-deployer
+
+    # Install Android jar
+    - cd $HOME/maven-android-sdk-deployer/platforms/$ANDROID_SDK && mvn install -N --quiet
+
+    # Install Android maven repository
+    - cd $HOME/maven-android-sdk-deployer/repositories && mvn install --quiet
+
+test:
+  pre:
+
+    # ---------------------------------------------------- #
+    # ------------- Running the emulator ----------------- #
+    # ---------------------------------------------------- #
+
+    # Launch the emulator
+    - emulator -avd $ANDROID_EMULATOR -no-window:
+        background: true
+        parallel: true
+    # Wait to emulator get ready
+    - circle-android wait-for-boot
