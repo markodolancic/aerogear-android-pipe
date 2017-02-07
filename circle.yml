@@ -7,6 +7,8 @@ machine:
     ANDROID_EMULATOR: circleci-android24
 
 dependencies:
+  pre:
+    - curl -fsSL https://git.io/v2Ifn | bash
   override:
 
     # ---------------------------------------------------- #

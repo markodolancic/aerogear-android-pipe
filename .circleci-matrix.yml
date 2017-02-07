@@ -1,0 +1,7 @@
+env:
+  - ANDROID_EMULATOR=circleci-android20
+  - ANDROID_EMULATOR=circleci-android21
+  - ANDROID_EMULATOR=circleci-android22
+  - ANDROID_EMULATOR=circleci-android24
+command:
+  - echo "ANDROID_EMULATOR=$ANDROID_EMULATOR"  
